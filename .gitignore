@@ -1,3 +1,4 @@
+*.TMP
 *.bak
 BASG.*
 TEMPLATE.*
