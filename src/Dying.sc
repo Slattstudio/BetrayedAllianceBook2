@@ -71,32 +71,57 @@
 						0
 					)
 				)
-				;(= gDeathIconTop 0)
-				(repeat
-					(= mbResult
-						(Print
-							977 1
-							#title
-							{Memento Mori:}
-							;#font
-							;gDeadFont
-							#button
-							{Restore}
-							1
-							#button
-							{Restart}
-							2
-							#button
-							{__Quit__}
-							3
+				(if gAutosave
+					(repeat
+						(= gVertButtons 1)
+						(= mbResult
+							(Print
+								{Remember:\nsave early, save often!}
+								#title {Words to the wise:}
+								#font gDeadFont
+								#button {Retry} 1
+								#button {Restore} 2							
+								#button {Restart} 3
+								#button {__Quit__} 4 )
+						)
+						(switch mbResult
+							(1
+								(= gRetry 1)
+								(gGame restore:)
+								(return)
+							)
+							(2
+								(if (!= (gGame restore:) -1) (return))
+							)
+							(3 (gGame restart:) (return))
+							(4 (= gQuitGame TRUE) (return))
 						)
 					)
-					(switch mbResult
-						(1
-							(if (!= (gGame restore:) -1) (return))
+				else
+					(repeat
+						(= mbResult
+							(Print
+								977 1
+								#title
+								{Memento Mori:}
+								#button
+								{Restore}
+								1
+								#button
+								{Restart}
+								2
+								#button
+								{__Quit__}
+								3
+							)
 						)
-						(2 (gGame restart:) (return))
-						(3 (= gQuitGame TRUE) (return))
+						(switch mbResult
+							(1
+								(if (!= (gGame restore:) -1) (return))
+							)
+							(2 (gGame restart:) (return))
+							(3 (= gQuitGame TRUE) (return))
+						)
 					)
 				)
 			)

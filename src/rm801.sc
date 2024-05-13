@@ -21,6 +21,7 @@
 	cursorCounter
 	selectNewGame = 1
 	selectRestore = 0
+	overAutosave = 0 ; is the cursor over the button
 	
 	newGameChosen = 0
 )
@@ -60,6 +61,7 @@
 		(slattstudioLogo init: setPri: 15)
 		(newGame init: setPri: 15)
 		(restore init: setPri: 15)
+		(autosave init: setPri: 15)
 		
 		(darkRight init: setPri: 10)
 		(darkLeft init: setPri: 10)
@@ -83,6 +85,8 @@
 		(super doit:)
 		; code executed each game cycle
 		
+		(if gAutosave (autosave loop: 1) else (autosave loop: 2))
+		
 		; Used to make the cursor disappear after 200 cycles
 		(if (> cursorCounter 0)
 			(-- cursorCounter)
@@ -91,27 +95,59 @@
 			)
 		)
 		
+		(= myEvent (Event new: evNULL))
 		; Used to activate which starting option
-		(if (< (gEgo x?) 145)
-			(= selectNewGame 1)
+		(if
+			(and
+				(> (myEvent x?) (- (autosave nsLeft?) 12))
+				(< (myEvent x?) (+ (autosave nsRight?) 12))
+				(> (myEvent y?) (+ (autosave nsTop?) 2))
+				(< (myEvent y?) (+ (autosave nsBottom?) 20))
+			)
+			(= selectNewGame 0)
 			(= selectRestore 0)
-			(newGame cel: 1)
+			(= overAutosave 1)
+			
+			(newGame cel: 0)
 			(restore cel: 0)
+			(autosave cel: 1)
+			
+			; make cursor visible
+			(= cursorCounter 5)
+			(SetCursor 999 (HaveMouse))
+			(= gCurrentCursor 999)			
+					
+			(autosave cel: 1)
+			(myEvent claimed: TRUE)
 		else
-			(if (> (gEgo x?) 200)
-				(= selectNewGame 0)
-				(= selectRestore 1)
-				(newGame cel: 0)
-				(restore cel: 1)
-			else
-				(= selectNewGame 0)
+			(if (< (gEgo x?) 145)
+				(= selectNewGame 1)
 				(= selectRestore 0)
-				(newGame cel: 0)
+				(= overAutosave 0)
+				
+				(newGame cel: 1)
 				(restore cel: 0)
-			)	
+				(autosave cel: 0)
+			else
+				(if (> (gEgo x?) 200)
+					(= selectNewGame 0)
+					(= selectRestore 1)
+					(= overAutosave 0)
+					(newGame cel: 0)
+					(restore cel: 1)
+					(autosave cel: 0)
+				else
+					(= selectNewGame 0)
+					(= selectRestore 0)
+					(= overAutosave 0)
+					(newGame cel: 0)
+					(restore cel: 0)
+					(autosave cel: 0)
+				)	
+			)
 		)
 		
-		(= myEvent (Event new: evNULL))
+		
 		(gEgo setMotion: MoveTo (myEvent x?)(myEvent y?))
 		(fire posn: (gEgo x?) (+ (gEgo y?) 15) )
 		(myEvent dispose:)
@@ -205,12 +241,19 @@
 		)
 	
 		(if (== (pEvent type?) evMOUSEBUTTON)
-			(if selectNewGame
-				;(RoomScript changeState: 2)	
-				(gRoom newRoom: 76)	
+			(if overAutosave
+				(if gAutosave
+					(= gAutosave 0)
+				else
+					(= gAutosave 1)
+				)	
 			else
-				(if selectRestore
-					(gGame restore:)	
+				(if selectNewGame	
+					(gRoom newRoom: 76)	
+				else
+					(if selectRestore
+						(gGame restore:)	
+					)
 				)
 			)
 		)
@@ -315,6 +358,15 @@
 		x 300
 		view 995
 		loop 6
+	)
+)
+(instance autosave of Prop
+	(properties
+		y 185
+		x 20
+		view 996
+		loop 1
+		cel 0
 	)
 )
 (instance book2 of Prop

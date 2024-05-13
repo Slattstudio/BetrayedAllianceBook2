@@ -81,18 +81,8 @@
 	gIconY = 4 	; Used to set the Icon's Y-position in the window. Default is 4. Typically used with Death
 	gDeathIconEnd = 0	; Used to determine if the "death icon" will End or go on indefinitely
 	gDeathIconTop = 0   ; When TRUE, Death Icon will be on Top, on the left side is DEFAULT
-		
-	;deathWindowOpen = 0		; Used as a switch to determine when you can close the deathWindow
-	;deathWindow 			; Used to open the display window
-	;deathCountFori = 0 					; Used in the "for"
-	;textDown = 7 			; Used to place statements progressively lower than earlier statements
-	;textRight = 20 			; Used to move statements right, once y-axis full - NOT YET IMPLEMENTED
 	
-	gAskedLeah = 30			; Used for text resources early game when both characters are together
-	
-	;gInvNum = 0
-	;gInvDrop = 0
-	
+	gAskedLeah = 30			; Used for text resources early game when both characters are together	
 	
 ; Variables that effect particular rooms
 
@@ -280,6 +270,8 @@
 	gRightClickSearch = 1
 	gEasyParser = 1
 	gYellowTips = 1
+	gAutosave = 1 	; used in dying script
+	gRetry = 0
 	
 	gAnotherEgo =  1	; FALSE when Ego is main character, TRUE when Ego is a different View/character
 	
