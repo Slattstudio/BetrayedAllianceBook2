@@ -204,13 +204,23 @@
 (instance convoScript of Script
 	(properties)
 	
-	(method (changeState newState)
+	(method (changeState newState &tmp [buffer 300])
 		(= state newState)
 		(switch state
 			(0
 			)
 			(1
-				(PrintLeah 0)	
+				;(PrintLeah 0)
+				(= gWndColor 14)
+				(= gWndBack 5)
+				(if gPrintDlg
+					(gPrintDlg dispose:)
+				)
+				(Format @buffer {%s, Your leg! Can you get up?} @gName)	
+				(Print @buffer #width 200 #at 50 50 #title "Leah says:" #dispose)
+				(= message 1)
+				(= gWndColor 0)
+				(= gWndBack 15)	
 			)
 			(2
 				(PrintLeah 2)	

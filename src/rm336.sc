@@ -292,7 +292,7 @@
 (instance convoScript of Script
 	(properties)
 	
-	(method (changeState newState)
+	(method (changeState newState &tmp [buffer 300])
 		(= state newState)
 		(switch state
 			(0
@@ -310,7 +310,19 @@
 				(PrintLeahDispose 13)	
 			)
 			(5
-				(PrintLeahDispose 14)	
+				;(PrintLeahDispose 14)
+				(Format @buffer {Stay strong, %s, we're almost there.} @gName)	
+				(= gWndColor 14)
+				(= gWndBack 5)
+				(Print @buffer		
+					#width 200
+					#at -1 140
+					#title "Leah says:"
+					#dispose
+				)
+				(= gWndColor 0)
+				(= gWndBack 15)
+				(= message 1)	
 			)
 			(6
 				(PrintLeahDispose 15)
