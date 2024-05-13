@@ -165,42 +165,35 @@
 			)
 			(MENU_NOTES
 				(= gVertButtons 1)
-				(= button
-					(Print
-						{What would you like to view?}
-						#title
-						{Your Notes:}
-						#button
-						{ Images_}
-						0
-						#button
-						{ Letters_}
-						1
-						#button
-						{ Journal Entries_}
-						2
-						#button
-						{ Exit_}
-						3
-					)
-				)
-				(switch button
-					(0
-						(Print 997 12)
-					)
-					(1 ;(viewBooks)
-						(if [gNotes 6]
-							(Print 0 70 #font 4)	
-						else
-							(Print 997 13)	
-						
+				(while (> button 0)
+					(= button
+						(Print
+							{What would you like to view?}
+							#title
+							{Your Notes:}
+							#button { Images_} 1
+							#button { Letters_} 2
+							#button { Journal Entries_} 3
+							#button { Exit_} 0
 						)
 					)
-					(2
-						
-						(ViewLetters)
+					(switch button
+						(1
+							(Print 997 12 #font 4)
+						)
+						(2 ;(viewBooks)
+							(if [gNotes 6]
+								(Print 0 70 #font 4)	
+							else
+								(Print 997 13 #font 4)	
+							
+							)
+						)
+						(3							
+							(ViewLetters)
+						)
 					)
-				)
+				)	
 				(= gVertButtons 0)
 			)
 			(MENU_SWITCH
