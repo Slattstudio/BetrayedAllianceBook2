@@ -72,9 +72,7 @@
 		
 		(PlayerControl)
 		(gTheMusic number: 76 loop: -1 priority: -1 play:)	
-		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-		;(RoomScript changeState: 7)
-		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 	)
 )
 
