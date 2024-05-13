@@ -99,6 +99,9 @@
 				(= gRightClickSearch
 					(Print 10 0 #title {Right-Click-Search:} #button { On_} 1 #button { Off_} 0 #font 4)
 				)
+				(= gAutosave
+					(Print 997 9 #title {Autosave and Retry:} #button { On_} 1 #button { Off_} 0 #font 4)
+				)
 				(= gVertButtons 0)
 				(= gWndColor 0)     ; clBLACK
 				(= gWndBack 15)
