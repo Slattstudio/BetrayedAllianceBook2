@@ -72,6 +72,14 @@
 		
 		(PlayerControl)
 		(gTheMusic number: 76 loop: -1 priority: -1 play:)	
+		
+		(Display
+			{type "cheat" to bypass questions}
+			dsFONT 4
+			dsCOORD 10 10
+			dsCOLOUR 9 ; blue
+			dsBACKGROUND clTRANSPARENT
+		)
 
 	)
 )
@@ -89,6 +97,12 @@
 			(if (not questions)				
 				(questionScript changeState: 1)
 				(= questions 1)
+				(= walking 0)
+			else
+				(if (> steps 200)
+					(Print "You've come to the end!")
+					(gRoom newRoom: 255)	
+				)
 			)
 		)
 		; Goddess floating
@@ -187,6 +201,15 @@
 			)
 		)
 		; handle Said's, etc...
+		(if (Said 'cheat')
+			(if (and (> questions 0) (< questions 10))
+				(questionScript changeState: 18)
+				(return)
+			else
+				(Print "HUH?")
+			)		
+		)
+		
 		(if (and (> questions 0) (< questions 10))
 			(if (Said '/senna')
 				(answerChecker 1)
@@ -203,10 +226,10 @@
 			(if (Said '/art,painting')
 				(answerChecker 5)	
 			)
-			(if (Said 'oil')
+			(if (Said '/oil')
 				(answerChecker 6)	
 			)
-			(if (or (Said '/*') (Said '*'))
+			(if (or (Said '/*') (Said '*'))	; wrong answers!
 				(questionScript changeState: 23)
 			)
 			
@@ -303,23 +326,33 @@
 			)
 			(6
 				(PrintGoddess 101 20)
-				(= questions 2)	; eye color						
+				(= questions 2)	; eye color	
+				(= cutsceneWait 1)	; cannot continue text until you answer
+				(= noBack 1)					
 			)
 			(7
 				(PrintGoddess 101 21)
 				(= questions 3)	; spirit animal	
+				(= cutsceneWait 1)	; cannot continue text until you answer
+				(= noBack 1)
 			)
 			(8
 				(PrintGoddess 101 22)
 				(= questions 4)	; fav color
+				(= cutsceneWait 1)	; cannot continue text until you answer
+				(= noBack 1)
 			)
 			(9
 				(PrintGoddess 101 23)
 				(= questions 5)	; skill/hobby
+				(= cutsceneWait 1)	; cannot continue text until you answer
+				(= noBack 1)
 			)
 			(10
 				(PrintGoddess 101 24)
 				(= questions 6)	; self-conscious
+				(= cutsceneWait 1)	; cannot continue text until you answer
+				(= noBack 1)
 			)
 			; answered question correctly
 			(15	(= cycles 15)
@@ -497,7 +530,7 @@
 		(= gWndColor 11)
 		(= gWndBack 9)
 		(Print textRes textResIndex
-			#width 80
+			#width 100
 			#at 40 120
 			#title "She says:"
 			#dispose		

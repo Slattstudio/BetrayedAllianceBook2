@@ -24,7 +24,7 @@
 		north 0
 		east 56
 		south 254
-		west 0
+		west 24
 	)
 	
 	(method (init)
@@ -34,11 +34,15 @@
 			(56 
 				(gEgo posn: 300 140 loop: 1)
 			)
+			(101 
+				(gEgo posn: 177 171 loop: 3)
+			)
 			(else 
 				(gEgo posn: 150 100 loop: 1)
 			)
 		)
 		(SetUpEgo)
+		(= gAnotherEgo 0)
 		(gEgo init:)
 		
 		(actionEgo init:)
