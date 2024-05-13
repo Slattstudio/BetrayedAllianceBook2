@@ -193,7 +193,7 @@
 		)	
 	)
 	
-	(method (changeState newState)
+	(method (changeState newState &tmp [buffer 300])
 		(= state newState)
 		(switch state
 			(0 (= cycles 1)
@@ -371,14 +371,32 @@
 				(egoRiding hide:)
 				(horse hide:)
 			)
-			(25 (= cycles 10)
+			
+			(25	
+				(= cycles 1)
+			)
+			(26	
+				(EditPrint @gName 14
+					{Welcome to Betrayed Alliance: Book 2.\n\nHonor us again with knowledge of your name:}
+					#at -1 40
+					#width 230
+				)
+				(if (== gName 0)
+					(Print {Come on you can do better!})
+					(self changeState: 26)
+				else
+					(self cue:)
+				)
+			)
+			(27 (= cycles 10)
+				(Format @buffer {Thus Leah von Spier and %s were thrown deep into the cursed forest bereft of saddle and resources, left to survive the wilderness together.} @gName) 
 				(= gWndColor 11)
 				(= gWndBack 1)
-				(Print 900 4 #font 4)
+				(Print @buffer #font 4)
 				(= gWndColor 0)
 				(= gWndBack 15)	
 			)
-			(26	
+			(28
 				(gRoom newRoom: 334)	
 			)
 		)

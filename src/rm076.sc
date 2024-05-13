@@ -23,6 +23,8 @@
 	
 	tutorialMessage = 0
 	
+	noBack = 0	; prevent player from pressing back for dialog
+	
 
 )
 
@@ -97,15 +99,17 @@
 			)
 		)
 		(if (== (pEvent message?) 7)  ; pressed left arrow
-			(if (> messagePrint 1)
-				(if message
-					(if gPrintDlg
-						(gPrintDlg dispose:)
-						(= message 0)
-						;(buttonInstructions hide:)
-						(-- messagePrint)						
-						(convoScript cycles: 0 changeState: messagePrint)
-						(dialogTrack)
+			(if (not noBack)
+				(if (> messagePrint 1)
+					(if message
+						(if gPrintDlg
+							(gPrintDlg dispose:)
+							(= message 0)
+							;(buttonInstructions hide:)
+							(-- messagePrint)						
+							(convoScript cycles: 0 changeState: messagePrint)
+							(dialogTrack)
+						)
 					)
 				)
 			)
@@ -181,6 +185,7 @@
 			)
 			(11	(= cycles 20)
 				(= conversationMode 0)	
+				(= noBack 1)
 			)
 			(12	(= cycles 50)	
 				(= gWndColor 11)

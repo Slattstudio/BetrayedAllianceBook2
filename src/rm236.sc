@@ -657,6 +657,20 @@
 					
 			)
 			(15
+				; if not character named
+				(if (== gName 0)
+					(EditPrint @gName 14
+					{Welcome to Betrayed Alliance: Book 2.\n\nHonor us again with knowledge of your name:}
+					#title {Player Name:}
+					#at 160 -1
+					#width 120
+					)
+					(if (== gName 0)
+						(Print {Come on you can do better!})
+						(self changeState: 14)
+						(return)
+					)
+				)
 				; tutorial box and toggle
 				(= gWndColor 0)
 				(= gWndBack 14)

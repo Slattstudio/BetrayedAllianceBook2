@@ -50,6 +50,7 @@
 
 (local
 
+	[gName 15] = [0] ; Once the name is determined by the player it can be used in texts using %s
 	[gDeaths 35] = 	[0
 					 0 0 0 0 0 0 0 0 0 0	; 1 - 10
 					 0 0 0 0 0 0 0 0 0 0	; 11 - 20
@@ -308,7 +309,6 @@
 	
 
 ; VARIABLES FROM BOOK 1 THAT MAY OR MAY NOT NEED TO BE CHANGED
-	[gName 15]
 	gAg =  15
 	gStr =  15
 	gLuk =  15
