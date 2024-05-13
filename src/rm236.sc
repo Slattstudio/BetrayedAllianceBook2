@@ -491,9 +491,12 @@
 			)
 		)
 		(if (or (Said 'talk/man,companion')
-			(Said 'look/leg, knee'))
+				(Said 'look/leg, knee'))
 			(if (not gKneeHealed)
 				(if (< (gEgo distanceTo: injuredEgo) 45)
+					(if (== (+ g303egoHealed gMushrooms) 3)
+						(= usingMushrooms 1)
+					)	
 					(pickUpScript changeState: 1)	
 				else
 					(PrintNotCloseEnough)
@@ -506,6 +509,9 @@
 			(if (Said '/man,companion,friend')
 				(if (not gKneeHealed)
 					(if (< (gEgo distanceTo: injuredEgo) 45)
+						(if (== (+ g303egoHealed gMushrooms) 3)
+							(= usingMushrooms 1)
+						)
 						(pickUpScript changeState: 1)	
 					else
 						(PrintNotCloseEnough)
