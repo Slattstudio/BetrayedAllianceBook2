@@ -4,7 +4,7 @@
 ; By Brian Provinciano
 ; ******************************************************************************
 ; gauge.sc
-; Contains a dialog window which contains a custom gauge control. This is used 
+; Contains a dialog window which contains a custom gauge control. This is used
 ; for things such as volume control and the game speed adjustment.
 (script# GAUGE_SCRIPT)
 (include sci.sh)
@@ -22,12 +22,9 @@
 	txtDescription =  NULL
 	btnHigher =  NULL
 	btnLower =  NULL
-	txtGuage =  NULL
 	btnOK =  NULL
 	btnNormal =  NULL
 	btnCancel =  NULL
-; text buffer
-	[strGauge 41]
 )
 
 (class Gauge of Dialog
@@ -53,24 +50,15 @@
 		maximum 15
 	)
 	
-	(method (init gaugePos &tmp ctlX ctlY)
+	(method (init &tmp ctlX ctlY)
 		(= window SysWindow)
-		(self update: gaugePos)
 		(= btnLower (DButton new:))
 		(btnLower text: lower moveTo: 4 4 setSize:)
 		(self add: btnLower setSize:)
-		(= txtGuage (DText new:))
-		(txtGuage
-			text: @strGauge
-			moveTo: (+ (btnLower nsRight?) 4) 4
-			font: 0
-			setSize:
-		)
-		(self add: txtGuage setSize:)
 		(= btnHigher (DButton new:))
 		(btnHigher
 			text: higher
-			moveTo: (+ (txtGuage nsRight?) 4) 4
+			moveTo: (+ (btnLower nsRight?) 132) 4
 			setSize:
 		)
 		(self add: btnHigher setSize:)
@@ -102,7 +90,6 @@
 		(self add: txtDescription)
 		(btnHigher move: 0 ctlY)
 		(btnLower move: 0 ctlY)
-		(txtGuage move: 0 ctlY)
 		(btnOK move: ctlX ctlY)
 		(btnNormal move: ctlX ctlY)
 		(btnCancel move: ctlX ctlY)
@@ -114,7 +101,6 @@
 		(= newGaugePos gaugePos)
 		(repeat
 			(self update: newGaugePos)
-			(txtGuage draw:)
 			(= btnPressed (super doit: btnOK))
 			(if (== btnPressed btnHigher)
 				(if (< newGaugePos maximum) (++ newGaugePos))
@@ -162,16 +148,47 @@
 		(super handleEvent: pEvent)
 	)
 	
-	(method (update gaugePos &tmp i strLen) ; Draws the guage
+	(method (update gaugePos &tmp i strLen x y) ; Draws the gauge
 		(= strLen (- maximum minimum))
 		(= i 0)
+		(= x (+ (btnLower nsRight?) 6))
+		(= y (btnLower nsTop?))
+		(if (== 1 gaugePos)
+			(DrawCel 902 0 3 x y -1)
+			(= i 1)
+			(= x (+ x 8))
+		)
 		(while (< i strLen)
 			(if (< i gaugePos)
-				(StrAt @strGauge i 6)
-			else                     ; black block character
-				(StrAt @strGauge i 7)
-			)                        ; white block character
+				(DrawCel
+					902
+					0
+					(cond 
+						((== 0 i) 1)
+						((== i (- gaugePos 1)) 2)
+						(else 0)
+					)
+					x
+					y
+					-1
+				)
+			else
+				(DrawCel
+					902
+					0
+					(cond 
+						((== 0 i) 5)
+						((== i (- strLen 1)) 6)
+						(else 4)
+					)
+					x
+					y
+					-1
+				)
+			)
+			(= x (+ x 8))
 			(++ i)
 		)
 	)
 )
+
