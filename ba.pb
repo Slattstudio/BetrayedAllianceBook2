@@ -10,20 +10,22 @@ x = RunProgram(pathToExecutable$)
 ; CursorPosition = 7
 ; EnableXP
 ; DPIAware
-; UseIcon = BA-1-Icon.ico
-; Executable = Betrayed Alliance.exe
+; UseIcon = BA-2-Icon.ico
+; Executable = Betrayed Alliance2.exe
 ; IncludeVersionInfo
-; VersionField0 = 1.0
-; VersionField1 = 1.0
+; VersionField0 = 2.0
+; VersionField1 = 2.0
 ; VersionField2 = Slattstudio
 ; VersionField3 = Betrayed Alliance
-; VersionField4 = 1.0
-; VersionField5 = 1.0
+; VersionField4 = 2.0
+; VersionField5 = 2.0
 ; VersionField6 = Game DOSBox Launcher
-; VersionField7 = Book 1
+; VersionField7 = Book 2
 ; VersionField8 = Betrayed Alliance
 ; VersionField9 = 2024
 ; VersionField10 = The Sierra Help Pages
-; VersionField14 = https://rjslattery.com/betrayed-alliance/
+; VersionField14 = https://slattstudio.com/
 ; VersionField18 = Publisher
+; VersionField19 = File version
 ; VersionField21 = Slattstudio
+; VersionField22 = 2.0
