@@ -1,0 +1,7 @@
+*.TMP
+*.bak
+BASG.*
+TEMPLATE.*
+stderr.txt
+stdout.txt
+error.log
