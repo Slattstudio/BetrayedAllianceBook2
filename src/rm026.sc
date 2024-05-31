@@ -43,6 +43,9 @@
 		(RunningCheck)
 		
 		(log init:)
+		(blob init: setScript: blobScript cycleSpeed: 2)
+		
+		(blobScript changeState: 1)
 	)
 )
 
@@ -67,7 +70,37 @@
 		)
 	)
 )
+(instance blobScript of Script
+	(properties)
+	
+	(method (changeState newState &tmp dyingScript)
+		(= state newState)
+		(switch state
+			(0)
+			(1	(= cycles 20) ; blob talk
+				(blob loop: 5 cel: 0 setCycle: Fwd)
+			)
+			(2	; blob blink
+				(blob loop: 2 cel: 0 setCycle: End self)
+			)
+			(3	(= cycles (Random 10 30))
+				; wait a moment
+			)
+			(4
+				(self changeState: 1)	
+			)
+		)
+	)
+)
 
+(instance blob of Prop
+	(properties
+		y 100
+		x 160
+		view 40
+		loop 5
+	)
+)
 (instance log of Prop
 	(properties
 		y 80

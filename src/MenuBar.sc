@@ -246,7 +246,7 @@
 						higher: {Louder}
 						lower: {Softer}
 						normal: 15
-						doit: (DoSound sndVOLUME newVolume)
+						doit: (DoSound sndVOLUME) ; newVolume)
 					)
 				)
 				(DoSound sndVOLUME newVolume)

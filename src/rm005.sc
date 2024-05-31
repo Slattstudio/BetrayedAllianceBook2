@@ -105,6 +105,10 @@
 		(super doit:)
 		(= currentX (gEgo x?))
 		(= currentY (gEgo y?))
+		
+		(if	(& (gEgo onControl:) ctlRED)
+			(gGame newRoom: 90)
+		)
 		(if
 			(or
 				(<= (gEgo distanceTo: shadow) 5)
