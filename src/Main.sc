@@ -86,6 +86,9 @@
 	
 ; Variables that effect particular rooms
 
+	; Bob locations
+	g26LogMoved = 0	; move the log to reveal Bob's first location
+	
 	; Collectible Fruits
 	g81Fruit = 0
 	g243Fruit = 0
@@ -138,7 +141,7 @@
 	g44ChestUnlocked = 0
 	g48WallBroken = 0 ; this wall is covered by bookcase
 	g48Bookshelf = 0	; 1 = room has been accessed, 2 = shelf has been permanently moved
-	g44WallBroken = 0 ; 1= observed, but not hit 2 = hit, not broken, 3 = botken - this wall leads to outside
+	g44WallBroken = 0 ; 1= observed, but not hit 2 = hit, not broken, 3 = broken - this wall leads to outside
 	g47WallBroken = 0 ; this wall leads to central area on ego's side
 	g49PaperTaken = 0	; 1 = taken from room 49, 2 = taken back to room 49, 3 = on floor in room 49
 	

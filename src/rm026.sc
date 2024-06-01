@@ -45,7 +45,11 @@
 		(log init:)
 		(blob init: setScript: blobScript cycleSpeed: 2)
 		
-		(blobScript changeState: 1)
+		(if (not g26LogMoved)
+			(RoomScript changeState: 1)	
+		else
+			(log posn: (log x?) (- (log y?) 20))
+		)
 	)
 )
 
@@ -60,12 +64,50 @@
 	(method (handleEvent pEvent)
 		(super handleEvent: pEvent)
 		; handle Said's, etc...
+		(if (Said 'move,push/log,wood')
+			(if (not g26LogMoved)
+				(if (and (> (gEgo y?) (log y?)) (<= (gEgo distanceTo: log) 40))
+					(PrintOK)	
+					(self changeState: 4)
+				else
+					(PrintNotCloseEnough)
+				)
+			else
+				(Print "You already did that.")
+			)
+		)
 	)
 	
 	(method (changeState newState)
 		(= state newState)
 		(switch state
 			(0 ; Handle state changes
+			)
+			(1	(= cycles (Random 10 30))	; log wobbling
+				(log loop: 0 setCycle: Fwd cycleSpeed: (Random 2 4))			
+			)
+			(2	(= cycles (Random 10 40))	; log stationary for a moment
+				(log setCycle: CT)	
+			)
+			(3	; back to wobbling
+				(if (not g26LogMoved)	; fail safe
+					(self changeState: 1)
+				)	
+			)
+			(4	; Moving to push log
+				(ProgramControl)
+				(gEgo setMotion: MoveTo (log x?) (+ (log y?) 3) self )	
+			)
+			(5	; pushing log
+				(gEgo yStep: 1 setMotion: MoveTo (gEgo x?) (- (gEgo y?) 20) self)
+				(log yStep: 1 setCycle: Walk cycleSpeed: 1 setMotion: MoveTo (log x?) (- (log y?) 20))	
+			)
+			(6
+				(RunningCheck)
+				(gEgo loop: 3)
+				(log cel: 0)
+				(= g26LogMoved 1)
+				(PlayerControl)	
 			)
 		)
 	)
@@ -101,7 +143,7 @@
 		loop 5
 	)
 )
-(instance log of Prop
+(instance log of Act
 	(properties
 		y 80
 		x 100
