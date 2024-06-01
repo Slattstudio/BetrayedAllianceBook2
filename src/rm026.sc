@@ -43,7 +43,7 @@
 		(RunningCheck)
 		
 		(log init:)
-		(blob init: setScript: blobScript cycleSpeed: 2)
+		(blob init: hide: setScript: blobScript cycleSpeed: 2 ignoreActors:)
 		
 		(if (not g26LogMoved)
 			(RoomScript changeState: 1)	
@@ -102,12 +102,16 @@
 				(gEgo yStep: 1 setMotion: MoveTo (gEgo x?) (- (gEgo y?) 20) self)
 				(log yStep: 1 setCycle: Walk cycleSpeed: 1 setMotion: MoveTo (log x?) (- (log y?) 20))	
 			)
-			(6
+			(6	; ego moves back
+				(gEgo yStep: 2 setMotion: MoveTo (- (gEgo x?) 30) (+ (gEgo y?) 20) self)	
+			)
+			(7
 				(RunningCheck)
 				(gEgo loop: 3)
 				(log cel: 0)
 				(= g26LogMoved 1)
 				(PlayerControl)	
+				(blobScript changeState: 1)
 			)
 		)
 	)
@@ -119,26 +123,50 @@
 		(= state newState)
 		(switch state
 			(0)
-			(1	(= cycles 20) ; blob talk
-				(blob loop: 5 cel: 0 setCycle: Fwd)
+			(1	; blob emereges
+				(ProgramControl)
+				(blob show: posn: (log x?) (+ (log y?) 15) loop: 3 cel: 7 setCycle: Beg self)	
 			)
-			(2	; blob blink
+			(2	; blinks
+				(blob loop: 2 cel: 0 setCycle: End self)		
+			)
+			(3	(= cycles 10) ; blob talk
+				(blob loop: 5 cel: 0 setCycle: Fwd)
+				
+			)
+			(4	(= cycles 2)
+				(PrintBob 26 0)
+				(blob setCycle: CT)	
+			)
+			(5
+				(PlayerControl)
+				(self changeState: 6)	
+			)
+			; bob's standard cycle
+			(6	; blob blink
 				(blob loop: 2 cel: 0 setCycle: End self)
 			)
-			(3	(= cycles (Random 10 30))
+			(7	(= cycles (Random 15 50))
 				; wait a moment
 			)
-			(4
-				(self changeState: 1)	
+			(8
+				(self changeState: 6)	
 			)
 		)
 	)
 )
+(procedure (PrintBob textRes textResIndex)
+	(= gWndColor 15)
+	(= gWndBack 3)
+	(Print textRes textResIndex #width 280 #at -1 140 #title {He says:})
+	(= gWndColor 0)
+	(= gWndBack 15)
+)
 
 (instance blob of Prop
 	(properties
-		y 100
-		x 160
+		y 190
+		x 320
 		view 40
 		loop 5
 	)
@@ -146,7 +174,7 @@
 (instance log of Act
 	(properties
 		y 80
-		x 100
+		x 160
 		view 88
 		loop 0
 	)
