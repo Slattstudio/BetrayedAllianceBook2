@@ -4,7 +4,7 @@ title: "[Bug]: "
 labels: ["bug"]
 projects: ["Slattstudio/14"]
 assignees:
-  - Slatteryan
+  - EvilDennisR
 body:
   - type: textarea
     id: what-happened
