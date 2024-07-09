@@ -1,0 +1,29 @@
+name: Bug Report
+description: File an issue/bug report to help us improve
+title: "[Bug]: "
+labels: ["bug"]
+projects: ["Slattstudio/14"]
+assignees:
+  - Slatteryan
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Description
+      description: Tell us what happened. If applicable, what did you expect to happen?
+      placeholder: |
+        eg. In the room with the pool . . .
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce (optional)
+      description: Description of what you did, so we can reproduce the issue
+      placeholder: |
+        eg. I tried to XYZ and it didn't work, and FOO didn't work either
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        **Thanks for taking the time to fill out this bug report!**
